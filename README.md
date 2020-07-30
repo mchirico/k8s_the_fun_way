@@ -24,3 +24,15 @@ footloose ssh root@knode0
 systemctl start docker
 ```
 
+### Step 4
+
+```
+git clone https://github.com/mchirico/kind.git
+cd kind
+```
+
+### Step 5
+
+```
+make cert-manager
+```
