@@ -1,0 +1,32 @@
+name: FootLoose Install
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+
+  footloose:
+    runs-on: ubuntu-latest
+
+
+    steps:
+    - name: Install Footloose
+      run: |
+        curl -Lo footloose https://github.com/weaveworks/footloose/releases/download/0.6.3/footloose-0.6.3-linux-x86_64
+        chmod +x footloose
+        sudo mv footloose /usr/local/bin/
+          
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+
+
+    - name: Create image
+      run: |
+        curl -L https://raw.githubusercontent.com/mchirico/k8s_the_fun_way/master/scripts/footloose.yaml -o footloose.yaml
+        footloose create
+        footloose ssh root@knode0
+
